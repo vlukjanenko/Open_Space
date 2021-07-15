@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Open Space</title>
+    <link rel="stylesheet" href="style.css">
+    <script>
+        const pwd = "TrustNo1";
+        let element;
+
+        function disableAll() {
+            element = document.querySelectorAll("input");
+            for (let i = 0; i < element.length; i++) {
+                if (element[i].getAttribute("name") !== "password" &&
+                    element[i].getAttribute("name") !== "confirm") {
+                    element[i].setAttribute("disabled", "1");
+                    element[i].onchange = checkHandler;
+                }
+            }
+            element[1].addEventListener("click", okHandler);
+            element[element.length - 1].addEventListener("click", rocketHandler);
+            //document.addEventListener("change", checkHandler);
+        }
+
+        function okHandler() {
+            let inputValue = document.querySelector("input").value;
+            if (inputValue === pwd) {
+                for (let i = 0; i < element.length; i++) {
+                    if (element[i].name !== "start") {
+                        element[i].removeAttribute("disabled");
+                    }
+                }
+            }
+        }
+
+        function rocketHandler() {
+            let rocket = document.querySelector(".rocket");
+            let cor = 240;
+            function fly() {
+                cor += 10;
+                rocket.style.left = cor + "px";
+                rocket.style.bottom = cor + "px";
+            }
+           setInterval(fly, 100);
+        }
+
+        function checkHandler() {
+            for (let i = 0; i < element.length; i++) {
+
+                if (element[i].getAttribute("name") !== "password" &&
+                    element[i].getAttribute("name") !== "confirm" /*&&
+                    element[i].getAttribute("name") !== "start"*/) {
+                    if ((element[i].type === "checkbox" && !element[i].checked) ||
+                        (element[i].type === "range" && element[i].value != "100")) {
+                        element[element.length - 1].setAttribute("disabled", "1");
+                        return;
+                    }
+                }
+            }
+            element[element.length - 1].removeAttribute("disabled");
+        }
+    </script>
+</head>
+<body onload="disableAll();">
+<div class="space">
+    <div class="planet-area">
+        <img class="planet" src="https://stepik.org/media/attachments/lesson/452681/mars.png" alt="planet">
+        <img class="rocket" src="https://stepik.org/media/attachments/lesson/452681/rocket.png" alt="rocket">
+    </div>
+    <div class="control-panel">
+        <div class="control-panel__inner">
+            <input type="password" name="password" placeholder="enter password to unlock">
+            <input type="button" name="confirm" value="OK">
+            <div class="check-buttons">
+                <input type="checkbox" value="on">
+                <input type="checkbox" value="on">
+                <input type="checkbox" value="on">
+                <input type="checkbox" value="on">
+                <input type="checkbox" value="on">
+                <input type="checkbox" value="on">
+            </div>
+            <div class="levers">
+                <input type="range">
+                <input type="range">
+                <input type="range">
+                <input type="range">
+                <input type="range">
+            </div>
+            <input type="button" name="start" value="Launch">
+        </div>
+    </div>
+</div>
+</body>
+</html>
